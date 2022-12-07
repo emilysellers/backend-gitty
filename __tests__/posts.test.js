@@ -44,6 +44,22 @@ describe('posts routes', () => {
   });
 
   // TEST 2: logged in user can create post
+  it('POST /api/v1/posts creates a new post for logged in user', async () => {
+    const agent = request.agent(app);
+    // log in a mock user
+    const res = await agent.get('/api/v1/github/callback?code=17').redirects(1);
+    expect(res.status).toBe(200);
+    // mock user creates post
+    const newPost = await agent
+      .post('/api/v1/posts')
+      .send({ title: 'Tester', description: 'a new thing' });
+    console.log('NEW POST BODY: ', newPost.body);
+    expect(newPost.body).toEqual({
+      id: '4',
+      title: 'Tester',
+      description: 'a new thing',
+    });
+  });
 
   // TEST 3: not logged in trying to post gets 401
   it('/api/v1/posts will return 401 if user is not logged in', async () => {
