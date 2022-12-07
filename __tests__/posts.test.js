@@ -13,13 +13,11 @@ describe('posts routes', () => {
     pool.end();
   });
 
-  // TEST 1: logged in user can get all posts
   it('/api/v1/posts should list all posts if user is logged in', async () => {
     const agent = await request.agent(app);
-    // login a mock user to get cookie and authenticate
     const res = await agent.get('/api/v1/github/callback?code=17').redirects(1);
     expect(res.status).toBe(200);
-    // get all posts
+
     const posts = await agent.get('/api/v1/posts');
     expect(posts.status).toBe(200);
     expect(posts.body).toMatchInlineSnapshot(`
@@ -43,17 +41,14 @@ describe('posts routes', () => {
     `);
   });
 
-  // TEST 2: logged in user can create post
   it('POST /api/v1/posts creates a new post for logged in user', async () => {
     const agent = request.agent(app);
-    // log in a mock user
     const res = await agent.get('/api/v1/github/callback?code=17').redirects(1);
     expect(res.status).toBe(200);
-    // mock user creates post
+
     const newPost = await agent
       .post('/api/v1/posts')
       .send({ title: 'Tester', description: 'a new thing' });
-    console.log('NEW POST BODY: ', newPost.body);
     expect(newPost.body).toEqual({
       id: '4',
       title: 'Tester',
@@ -61,10 +56,8 @@ describe('posts routes', () => {
     });
   });
 
-  // TEST 3: not logged in trying to post gets 401
   it('/api/v1/posts will return 401 if user is not logged in', async () => {
     const res = await request(app).get('/api/v1/posts');
-    // console.log('POSTS TEST, posts: ', posts);
     expect(res.status).toBe(401);
   });
 });

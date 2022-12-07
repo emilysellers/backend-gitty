@@ -5,7 +5,7 @@ const app = require('../lib/app');
 
 jest.mock('../lib/services/github');
 
-describe.skip('github auth', () => {
+describe('github auth', () => {
   beforeEach(() => {
     return setup(pool);
   });
@@ -35,6 +35,5 @@ describe.skip('github auth', () => {
       iat: expect.any(Number),
       exp: expect.any(Number),
     });
-    // console.log('GITHUB TESTS, res: ', res.cookies);
   });
 });
