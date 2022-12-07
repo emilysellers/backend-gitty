@@ -25,4 +25,11 @@ CREATE TABLE posts (
   description VARCHAR(255) NOT NULL
 );
 
+INSERT INTO posts (title, description)
+VALUES
+('A Wild Story', 'It all began...'),
+('Info on beetles', 'All you need to know'),
+('Party on Tuesday', 'See you there!')
+;
+
 
