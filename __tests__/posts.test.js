@@ -46,9 +46,9 @@ describe('posts routes', () => {
   // TEST 2: logged in user can create post
 
   // TEST 3: not logged in trying to post gets 401
-  // it('/api/v1/posts will return 401 if user is not logged in', async () => {
-  //   const res = await request(app).get('/api/v1/posts');
-  //   // console.log('POSTS TEST, posts: ', posts);
-  //   expect(res.status).toBe(401);
-  // });
+  it('/api/v1/posts will return 401 if user is not logged in', async () => {
+    const res = await request(app).get('/api/v1/posts');
+    // console.log('POSTS TEST, posts: ', posts);
+    expect(res.status).toBe(401);
+  });
 });
